@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guy Levi</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --black: #0a0a0a;
+  --white: #f4f3ef;
+  --orange: #e8622a;
+  --orange-dim: rgba(232,98,42,0.15);
+  --gray: #666;
+  --mid: #999;
+  --inter: 'Inter', sans-serif;
+  --display: 'Bebas Neue', sans-serif;
+}
+html { scroll-behavior: smooth; }
+body { background: var(--black); color: var(--white); font-family: var(--inter); overflow-x: hidden; }
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.4rem 3rem;
+  background: rgba(10,10,10,0.6);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.nav-logo { font-size: .72rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--white); text-decoration: none; }
+.nav-right { display: flex; align-items: center; gap: 2.5rem; }
+.nav-links { display: flex; gap: 2.5rem; list-style: none; }
+.nav-links a { font-size: .68rem; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: rgba(244,243,239,.45); text-decoration: none; transition: color .2s; }
+.nav-links a:hover { color: var(--white); }
+.nav-resume { font-size: .68rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--black); background: var(--orange); padding: .45rem 1.1rem; text-decoration: none; transition: opacity .2s; }
+.nav-resume:hover { opacity: .85; }
+
+/* ── HERO ── */
+#hero {
+  height: 100vh; position: relative; overflow: hidden;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  background: #0a0a0a;
+}
+.hero-bg {
+  display: none;
+}
+@keyframes heroZoom { to { transform: scale(1); } }
+
+.hero-center {
+  position: relative; z-index: 1;
+  display: flex; flex-direction: column; align-items: center;
+  text-align: center;
+}
+.hero-eyebrow {
+  font-size: .68rem; font-weight: 600; letter-spacing: .25em; text-transform: uppercase;
+  color: var(--orange); margin-bottom: 1.5rem;
+  opacity: 0; animation: fadeUp .7s .2s forwards;
+}
+.hero-name {
+  font-family: var(--display);
+  font-size: clamp(7rem, 18vw, 18rem);
+  line-height: .88; letter-spacing: .02em;
+  color: var(--white);
+  opacity: 0; animation: fadeUp .8s .35s forwards;
+}
+.hero-name-accent { color: var(--orange); }
+.hero-rule {
+  width: 60px; height: 2px; background: var(--orange); margin: 2rem auto;
+  opacity: 0; animation: fadeUp .6s .55s forwards;
+}
+.hero-sub {
+  font-size: .9rem; font-weight: 300; color: rgba(244,243,239,.65);
+  letter-spacing: .04em; max-width: 380px; line-height: 1.7;
+  opacity: 0; animation: fadeUp .7s .65s forwards;
+}
+.hero-actions {
+  display: flex; gap: 1rem; margin-top: 2.5rem;
+  opacity: 0; animation: fadeUp .7s .8s forwards;
+}
+@keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:none; } }
+.btn-orange { display: inline-block; padding: .7rem 1.75rem; background: var(--orange); color: #fff; font-size: .7rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; text-decoration: none; transition: opacity .2s; }
+.btn-orange:hover { opacity: .85; }
+.btn-outline-w { display: inline-block; padding: .7rem 1.75rem; background: transparent; color: var(--white); border: 1px solid rgba(244,243,239,.3); font-size: .7rem; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; text-decoration: none; transition: border-color .2s; }
+.btn-outline-w:hover { border-color: var(--white); }
+
+/* scroll cue */
+.hero-scroll-cue {
+  position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+  z-index: 1; display: flex; flex-direction: column; align-items: center; gap: .5rem;
+  opacity: 0; animation: fadeUp .7s 1.2s forwards;
+}
+.scroll-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--orange); animation: bounce 1.8s infinite; }
+@keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(6px)} }
+.scroll-cue-text { font-size: .58rem; letter-spacing: .2em; text-transform: uppercase; color: rgba(244,243,239,.3); }
+
+/* ── ABOUT ── */
+#about { display: grid; grid-template-columns: 1fr 1fr; min-height: 90vh; }
+.about-img {
+  position: relative; overflow: hidden; min-height: 500px;
+}
+.about-img-inner {
+  position: absolute; inset: 0;
+  background: url('https://images.unsplash.com/photo-1508444845599-5c89863b1c44?auto=format&w=900&q=85') center / cover no-repeat;
+  filter: brightness(.65) saturate(.85);
+  transition: transform .6s ease;
+}
+#about:hover .about-img-inner { transform: scale(1.03); }
+.about-img-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to right, transparent 70%, rgba(10,10,10,0.6) 100%);
+}
+.about-img-tag {
+  position: absolute; bottom: 2rem; left: 2rem;
+  font-size: .6rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase;
+  color: rgba(244,243,239,.5); border-left: 2px solid var(--orange); padding-left: .75rem;
+}
+.about-content { background: #111; padding: 6rem 4rem; display: flex; flex-direction: column; justify-content: center; }
+.section-label { font-size: .62rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--orange); margin-bottom: 1.25rem; }
+.about-content h2 { font-family: var(--display); font-size: clamp(3.5rem, 5vw, 5.5rem); line-height: .92; color: var(--white); margin-bottom: 2.5rem; }
+.about-content p { font-size: .92rem; font-weight: 300; color: rgba(244,243,239,.6); line-height: 1.9; margin-bottom: 1.1rem; max-width: 440px; }
+.about-content p strong { color: var(--white); font-weight: 600; }
+.about-roles { margin-top: 2.5rem; border-top: 1px solid rgba(255,255,255,.07); }
+.role-item { display: flex; justify-content: space-between; align-items: baseline; padding: 1.1rem 0; border-bottom: 1px solid rgba(255,255,255,.07); }
+.org { font-size: .6rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--orange); margin-bottom: .2rem; }
+.title { font-size: .9rem; font-weight: 500; color: var(--white); }
+.role-date { font-size: .62rem; color: var(--gray); white-space: nowrap; margin-left: 1rem; }
+.linkedin-link { display: inline-flex; align-items: center; gap: .5rem; margin-top: 2rem; font-size: .68rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--orange); text-decoration: none; border-bottom: 1px solid rgba(232,98,42,.3); padding-bottom: .2rem; transition: border-color .2s; }
+.linkedin-link:hover { border-color: var(--orange); }
+
+/* ── PROJECTS ── */
+#projects { background: var(--black); padding: 7rem 3rem; }
+.projects-header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 0; padding-bottom: 1.5rem; border-bottom: 2px solid var(--orange); }
+.projects-header h2 { font-family: var(--display); font-size: clamp(3rem, 5vw, 5rem); color: var(--white); }
+
+
+
+
+.proj-list { display: flex; flex-direction: column; }
+.proj-row {
+  display: grid; grid-template-columns: 64px 1fr auto 32px;
+  align-items: center; gap: 2rem;
+  padding: 1.75rem 0; border-bottom: 1px solid rgba(255,255,255,.07);
+  text-decoration: none; color: inherit;
+  transition: background .2s;
+  position: relative;
+}
+.proj-row:hover { background: rgba(232,98,42,.04); }
+.proj-row:hover .proj-arrow { opacity: 1; transform: translate(3px,-3px); color: var(--orange); }
+.proj-row:hover .proj-num-col { color: var(--orange); }
+.proj-num-col { font-size: .65rem; color: var(--gray); letter-spacing: .1em; padding-left: .25rem; transition: color .2s; }
+.proj-row-tag { font-size: .6rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--orange); margin-bottom: .3rem; }
+.proj-row-title { font-size: 1.25rem; font-weight: 600; color: var(--white); letter-spacing: -.01em; }
+.proj-row-desc { font-size: .78rem; font-weight: 300; color: rgba(244,243,239,.38); line-height: 1.65; margin-top: .3rem; }
+.proj-row-url { font-size: .62rem; color: var(--gray); letter-spacing: .05em; text-align: right; white-space: nowrap; }
+.proj-arrow { font-size: 1rem; color: var(--white); opacity: 0; transition: opacity .2s, transform .2s; }
+.proj-row-nolink { display: grid; grid-template-columns: 64px 1fr auto 32px; align-items: center; gap: 2rem; padding: 1.75rem 0; border-bottom: 1px solid rgba(255,255,255,.07); opacity: .35; }
+.github-strip { display: flex; align-items: center; justify-content: space-between; padding: 1.5rem 0; border-top: 1px solid rgba(255,255,255,.07); text-decoration: none; transition: background .2s; }
+.github-strip:hover { background: rgba(232,98,42,.04); }
+.github-label { font-size: .68rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--orange); }
+.github-handle { font-size: 1rem; font-weight: 600; color: var(--white); }
+.github-arrow { color: var(--orange); font-size: .9rem; }
+
+/* ── AWARDS ── */
+#awards { background: #0d0d0d; }
+.awards-hero {
+  position: relative; height: 340px; overflow: hidden;
+  display: flex; align-items: flex-end; padding: 2.5rem 3rem;
+}
+.awards-hero-bg {
+  position: absolute; inset: 0;
+  background: url('https://images.unsplash.com/photo-1516849841032-87cbac4d88f7?auto=format&w=1600&q=80') center 60% / cover no-repeat;
+  filter: brightness(.3) saturate(.6);
+}
+.awards-hero-bg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(13,13,13,1) 0%, transparent 60%); }
+.awards-hero-title { position: relative; z-index: 1; }
+.awards-hero-title h2 { font-family: var(--display); font-size: clamp(3.5rem, 7vw, 7rem); color: var(--white); line-height: .9; }
+.awards-hero-title h2 span { color: var(--orange); }
+.awards-list { padding: 3rem; display: flex; flex-direction: column; }
+.award-item { display: grid; grid-template-columns: 1fr auto; gap: 2rem; padding: 1.75rem 0; border-bottom: 1px solid rgba(255,255,255,.07); align-items: start; }
+.award-item:first-child { border-top: 1px solid rgba(255,255,255,.07); }
+.award-name { font-size: 1rem; font-weight: 600; color: var(--white); margin-bottom: .25rem; }
+.award-issuer { font-size: .72rem; color: var(--orange); font-weight: 600; letter-spacing: .06em; margin-bottom: .4rem; }
+.award-desc { font-size: .8rem; font-weight: 300; color: rgba(244,243,239,.4); line-height: 1.65; }
+.award-date { font-size: .65rem; color: var(--gray); letter-spacing: .08em; white-space: nowrap; padding-top: .2rem; }
+
+/* ── SKILLS ── */
+#skills { background: var(--black); padding: 6rem 3rem; }
+.skills-header { margin-bottom: 3rem; padding-bottom: 1.5rem; border-bottom: 2px solid var(--orange); display: flex; align-items: baseline; justify-content: space-between; }
+.skills-header h2 { font-family: var(--display); font-size: clamp(3rem, 5vw, 5rem); color: var(--white); }
+.skills-grid { display: grid; grid-template-columns: repeat(4,1fr); border: 1px solid rgba(255,255,255,.07); }
+.skill-item { padding: 2.75rem 2rem; border-right: 1px solid rgba(255,255,255,.07); transition: background .25s; }
+.skill-item:last-child { border-right: none; }
+.skill-item:hover { background: var(--orange-dim); }
+.skill-item:hover .skill-item-name { color: var(--orange); }
+.skill-label { font-size: .58rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--orange); margin-bottom: .9rem; }
+.skill-item-name { font-family: var(--display); font-size: 2.6rem; color: var(--white); line-height: 1; transition: color .25s; }
+.skill-item-sub { font-size: .72rem; font-weight: 300; color: rgba(244,243,239,.35); margin-top: .5rem; }
+
+/* ── CONTACT ── */
+#contact { position: relative; overflow: hidden; min-height: 80vh; display: flex; align-items: center; }
+.contact-bg {
+  position: absolute; inset: 0;
+  background: url('https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?auto=format&w=1600&q=80') center / cover no-repeat;
+  filter: brightness(.18) saturate(.5);
+}
+.contact-content { position: relative; z-index: 1; padding: 7rem 3rem; width: 100%; }
+.contact-content h2 { font-family: var(--display); font-size: clamp(4.5rem, 11vw, 11rem); line-height: .88; color: var(--white); margin-bottom: 3.5rem; }
+.contact-content h2 span { color: var(--orange); }
+.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; max-width: 760px; }
+.contact-col-label { font-size: .6rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--orange); margin-bottom: 1rem; }
+.contact-email { font-size: 1rem; font-weight: 500; color: var(--white); margin-bottom: 1.75rem; text-decoration: none; display: block; transition: color .2s; }
+.contact-email:hover { color: var(--orange); }
+.contact-links { display: flex; flex-direction: column; gap: .6rem; }
+.contact-link { display: flex; justify-content: space-between; align-items: center; padding: .85rem 1rem; border: 1px solid rgba(255,255,255,.1); text-decoration: none; color: var(--white); font-size: .82rem; font-weight: 500; transition: background .2s, border-color .2s; }
+.contact-link:hover { background: var(--orange-dim); border-color: rgba(232,98,42,.4); color: var(--orange); }
+.contact-link-arrow { font-size: .8rem; color: var(--gray); }
+
+/* FOOTER */
+footer { background: #060606; padding: 1.5rem 3rem; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,.06); }
+.footer-l { font-size: .6rem; color: var(--gray); letter-spacing: .08em; }
+.footer-r { font-size: .6rem; color: var(--orange); letter-spacing: .08em; }
+
+/* REVEAL */
+.reveal { opacity: 0; transform: translateY(20px); transition: opacity .65s ease, transform .65s ease; }
+.reveal.up { opacity: 1; transform: none; }
+
+/* RESPONSIVE */
+@media (max-width: 860px) {
+  nav { padding: 1.2rem 1.5rem; }
+  .nav-links { display: none; }
+  #about { grid-template-columns: 1fr; }
+  .about-img { min-height: 280px; }
+  .about-content { padding: 3.5rem 1.5rem; }
+  .hero-name { font-size: clamp(5rem, 22vw, 22vw); }
+  #projects, #skills { padding: 4rem 1.5rem; }
+  .awards-list { padding: 2rem 1.5rem; }
+  .awards-hero { padding: 2rem 1.5rem; }
+  .proj-row, .proj-row-nolink { grid-template-columns: 48px 1fr; }
+  .proj-row-url, .proj-arrow { display: none; }
+  .skills-grid { grid-template-columns: 1fr 1fr; }
+  .skill-item { border-bottom: 1px solid rgba(255,255,255,.07); }
+  .contact-content { padding: 4rem 1.5rem; }
+  .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  footer { padding: 1.25rem 1.5rem; flex-direction: column; gap: .5rem; }
+
+  .award-item { grid-template-columns: 1fr; gap: .25rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">Guy Levi</a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#awards">Awards</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a href="YOUR_RESUME_LINK_HERE" class="nav-resume" target="_blank">Resume ↓</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <!-- Topographic contour canvas -->
+  <canvas id="topoCanvas" style="position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;"></canvas>
+  <div class="hero-center">
+    <p class="hero-eyebrow">Aerospace &amp; Systems Engineer · Ohio State University</p>
+    <div class="hero-name">GUY<br><span class="hero-name-accent">LEVI</span></div>
+    <div class="hero-rule"></div>
+    <p class="hero-sub">Building VTOL aircraft, flight simulators, and autonomous UAS. Systems engineering intern at Volynt Aero.</p>
+    <div class="hero-actions">
+      <a href="#projects" class="btn-orange">View Projects</a>
+      <a href="#contact" class="btn-outline-w">Get in Touch</a>
+    </div>
+  </div>
+  <div class="hero-scroll-cue">
+    <div class="scroll-dot"></div>
+    <span class="scroll-cue-text">Scroll</span>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-img">
+    <div class="about-img-inner"></div>
+    <div class="about-img-overlay"></div>
+    <div class="about-img-tag">Ohio State University · Columbus, OH</div>
+  </div>
+  <div class="about-content">
+    <div class="section-label">About</div>
+    <h2>SYSTEMS<br>THINKER.</h2>
+    <p>I'm <strong>Guy Levi</strong>, an aerospace engineering student at The Ohio State University. I work across the full stack of an aerospace project — from simulation and structural analysis to avionics and ground control systems.</p>
+    <p>My long-term goal is a systems engineering role in defense aerospace. I care about building things that actually fly, work, and matter.</p>
+    <div class="about-roles">
+      <div class="role-item">
+        <div><div class="org">Volynt Aero</div><div class="title">Systems Engineering Intern</div></div>
+        <div class="role-date">Current</div>
+      </div>
+      <div class="role-item">
+        <div><div class="org">The Sloopy Works · GoAERO</div><div class="title">Club President</div></div>
+        <div class="role-date">Current</div>
+      </div>
+      <div class="role-item">
+        <div><div class="org">Ohio State University</div><div class="title">B.S. Aerospace Engineering</div></div>
+        <div class="role-date">In Progress</div>
+      </div>
+    </div>
+    <a href="https://www.linkedin.com/in/guy-levi-77139a251" class="linkedin-link" target="_blank">LinkedIn Profile ↗</a>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="projects-header reveal">
+    <h2>PROJECTS</h2>
+  </div>
+  <div class="proj-list">
+    <a href="https://u.osu.edu/simulinksim/project-overview/" class="proj-row reveal" target="_blank">
+      <div class="proj-num-col">001</div>
+      <div>
+        <div class="proj-row-tag">Flight Simulation · Simulink</div>
+        <div class="proj-row-title">Simulink Aircraft Simulator</div>
+        <div class="proj-row-desc">Full aircraft dynamics simulation modeling flight physics, control surfaces, and system response.</div>
+      </div>
+      <div class="proj-row-url">u.osu.edu/simulinksim</div>
+      <div class="proj-arrow">↗</div>
+    </a>
+    <a href="https://u.osu.edu/nasablueskies25/" class="proj-row reveal" target="_blank">
+      <div class="proj-num-col">002</div>
+      <div>
+        <div class="proj-row-tag">NASA Competition · Agricultural UAS</div>
+        <div class="proj-row-title">NASA Blue Skies 2025 — AgAir</div>
+        <div class="proj-row-desc">Autonomous agricultural UAS for NASA's Blue Skies competition. Precision spraying and full systems integration.</div>
+      </div>
+      <div class="proj-row-url">u.osu.edu/nasablueskies25</div>
+      <div class="proj-arrow">↗</div>
+    </a>
+    <a href="https://u.osu.edu/fehrdpe7/" class="proj-row reveal" target="_blank">
+      <div class="proj-num-col">003</div>
+      <div>
+        <div class="proj-row-tag">Robotics · Systems Design</div>
+        <div class="proj-row-title">Robot Design Project</div>
+        <div class="proj-row-desc">Mechanical design, programming, and autonomous navigation built through OSU's engineering curriculum.</div>
+      </div>
+      <div class="proj-row-url">u.osu.edu/fehrdpe7</div>
+      <div class="proj-arrow">↗</div>
+    </a>
+    <a href="https://u.osu.edu/fehsdp2023jt1020gc/" class="proj-row reveal" target="_blank">
+      <div class="proj-num-col">004</div>
+      <div>
+        <div class="proj-row-tag">Software · Engineering Design</div>
+        <div class="proj-row-title">Software Design Project</div>
+        <div class="proj-row-desc">Collaborative software engineering project covering requirements, architecture, implementation, and testing.</div>
+      </div>
+      <div class="proj-row-url">u.osu.edu/fehsdp2023</div>
+      <div class="proj-arrow">↗</div>
+    </a>
+    <div class="proj-row-nolink reveal">
+      <div class="proj-num-col">005</div>
+      <div>
+        <div class="proj-row-tag">NASA RASC-AL · Mission Concept</div>
+        <div class="proj-row-title">NASA RASC-AL Competition</div>
+        <div class="proj-row-desc">Advanced space mission concept for NASA's Revolutionary Aerospace Systems Concepts competition.</div>
+      </div>
+      <div class="proj-row-url">Link coming soon</div>
+      <div></div>
+    </div>
+  </div>
+  <a href="https://github.com/Glevi7" target="_blank" class="github-strip reveal">
+    <span class="github-label">GitHub</span>
+    <span class="github-handle">github.com/Glevi7</span>
+    <span class="github-arrow">↗</span>
+  </a>
+</section>
+
+<!-- AWARDS -->
+<section id="awards">
+  <div class="awards-hero">
+    <div class="awards-hero-bg"></div>
+    <div class="awards-hero-title reveal">
+      <h2>AWARDS &amp;<br><span>RECOGNITION</span></h2>
+    </div>
+  </div>
+  <div class="awards-list">
+    <div class="award-item reveal">
+      <div>
+        <div class="award-name">ASA Award</div>
+        <div class="award-issuer">Cleveland Chapter · American Statistical Association</div>
+        <div class="award-desc">Recognized for developing an ML model to classify skin growths as malignant or benign.</div>
+      </div>
+      <div class="award-date">Mar 2019</div>
+    </div>
+    <div class="award-item reveal">
+      <div>
+        <div class="award-name">Broadcom Masters Nomination</div>
+        <div class="award-issuer">Broadcom Foundation</div>
+        <div class="award-desc">Nominated to participate in the 2019 Broadcom Masters national STEM competition.</div>
+      </div>
+      <div class="award-date">Mar 2019</div>
+    </div>
+    <div class="award-item reveal">
+      <div>
+        <div class="award-name">Outstanding Project Award</div>
+        <div class="award-issuer">Cleveland Clinic · Cancer Biology</div>
+        <div class="award-desc">Recognized for the ML model classifying skin growths as malignant or benign.</div>
+      </div>
+      <div class="award-date">Mar 2019</div>
+    </div>
+    <div class="award-item reveal">
+      <div>
+        <div class="award-name">Outstanding Project Award</div>
+        <div class="award-issuer">Cleveland Clinic · Quantitative Health Sciences</div>
+        <div class="award-desc">Recognized for the ML model classifying skin growths as malignant or benign.</div>
+      </div>
+      <div class="award-date">Mar 2019</div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="skills-header reveal">
+    <h2>SKILLS</h2>
+    <span class="project-count" style="color:var(--orange)">Technical Toolkit</span>
+  </div>
+  <div class="skills-grid reveal">
+    <div class="skill-item">
+      <div class="skill-label">Simulation</div>
+      <div class="skill-item-name">MATLAB</div>
+      <div class="skill-item-sub">Analysis &amp; scripting</div>
+    </div>
+    <div class="skill-item">
+      <div class="skill-label">Control Systems</div>
+      <div class="skill-item-name">SIMULINK</div>
+      <div class="skill-item-sub">Dynamic modeling</div>
+    </div>
+    <div class="skill-item">
+      <div class="skill-label">3D CAD</div>
+      <div class="skill-item-name">SOLID­WORKS</div>
+      <div class="skill-item-sub">Mechanical design</div>
+    </div>
+    <div class="skill-item">
+      <div class="skill-label">FEA / Structural</div>
+      <div class="skill-item-name">ANSYS</div>
+      <div class="skill-item-sub">Structural analysis</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-bg"></div>
+  <div class="contact-content">
+    <h2 class="reveal">LET'S<br><span>TALK.</span></h2>
+    <div class="contact-grid">
+      <div class="reveal">
+        <div class="contact-col-label">Email</div>
+        <a href="mailto:guy.levi.2004@gmail.com" class="contact-email">guy.levi.2004@gmail.com</a>
+        <a href="mailto:guy.levi.2004@gmail.com" class="btn-orange">Send Email ↗</a>
+      </div>
+      <div class="reveal" style="transition-delay:.1s">
+        <div class="contact-col-label">Links</div>
+        <div class="contact-links">
+          <a href="https://www.linkedin.com/in/guy-levi-77139a251" class="contact-link" target="_blank">LinkedIn <span class="contact-link-arrow">↗</span></a>
+          <a href="https://github.com/Glevi7" class="contact-link" target="_blank">GitHub <span class="contact-link-arrow">↗</span></a>
+          <a href="YOUR_RESUME_LINK_HERE" class="contact-link" target="_blank">Resume / CV <span class="contact-link-arrow">↓</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-l">© 2026 Guy Levi · Columbus, OH</div>
+  <div class="footer-r">Aerospace &amp; Systems Engineering</div>
+</footer>
+
+<script>
+// ── Topographic contour background ──
+(function() {
+  const canvas = document.getElementById('topoCanvas');
+  const hero = document.getElementById('hero');
+  function resize() {
+    canvas.width = hero.offsetWidth;
+    canvas.height = hero.offsetHeight;
+    draw();
+  }
+
+  // Smooth noise using multiple sine waves (no external lib needed)
+  function noise(x, y, seed) {
+    const s = seed || 0;
+    return (
+      Math.sin(x * 0.8 + s) * Math.cos(y * 0.6 + s * 0.7) * 0.4 +
+      Math.sin(x * 0.3 + y * 0.5 + s * 1.3) * 0.3 +
+      Math.cos(x * 1.4 + s * 0.4) * Math.sin(y * 1.1 + s * 0.9) * 0.2 +
+      Math.sin(x * 0.18 + y * 0.22 + s * 2.1) * 0.15 +
+      Math.cos(x * 2.1 + y * 0.9 + s * 0.3) * Math.sin(y * 0.4 + s) * 0.08 +
+      Math.sin(x * 0.55 + y * 1.7 + s * 1.8) * 0.1
+    );
+  }
+
+  function draw() {
+    const ctx = canvas.getContext('2d');
+    const W = canvas.width, H = canvas.height;
+    ctx.clearRect(0, 0, W, H);
+
+    const GRID = 5;           // sample resolution (px)
+    const cols = Math.ceil(W / GRID) + 1;
+    const rows = Math.ceil(H / GRID) + 1;
+    const LEVELS = 22;        // number of contour bands
+    const seeds = [0, 3.7, 8.1, 14.5, 21.3];
+
+    // Build height field
+    const field = [];
+    for (let r = 0; r < rows; r++) {
+      field[r] = [];
+      for (let c = 0; c < cols; c++) {
+        const nx = c / cols * 6;
+        const ny = r / rows * 4;
+        let v = 0;
+        seeds.forEach(s => { v += noise(nx, ny, s); });
+        field[r][c] = v / seeds.length;
+      }
+    }
+
+    // Find global min/max
+    let mn = Infinity, mx = -Infinity;
+    field.forEach(row => row.forEach(v => { if(v<mn)mn=v; if(v>mx)mx=v; }));
+
+    // Marching squares — draw contour lines
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+
+    for (let level = 0; level <= LEVELS; level++) {
+      const t = level / LEVELS;
+      const iso = mn + t * (mx - mn);
+
+      // Alternate: most lines white-dim, every ~5th line slightly brighter
+      const isBright = (level % 5 === 0);
+      const alpha = isBright ? 0.18 : 0.09;
+      ctx.strokeStyle = `rgba(255,255,255,${alpha})`;
+      ctx.lineWidth = isBright ? 0.9 : 0.55;
+
+      ctx.beginPath();
+      for (let r = 0; r < rows - 1; r++) {
+        for (let c = 0; c < cols - 1; c++) {
+          const x = c * GRID, y = r * GRID;
+          const v00 = field[r][c];
+          const v10 = field[r][c+1];
+          const v01 = field[r+1][c];
+          const v11 = field[r+1][c+1];
+
+          // Which corners are above iso?
+          const b00 = v00 >= iso ? 1 : 0;
+          const b10 = v10 >= iso ? 1 : 0;
+          const b01 = v01 >= iso ? 1 : 0;
+          const b11 = v11 >= iso ? 1 : 0;
+          const idx = b00*8 + b10*4 + b11*2 + b01*1;
+          if (idx === 0 || idx === 15) continue;
+
+          // Interpolate edge crossings
+          function lerp(a, b, va, vb) {
+            if (Math.abs(vb - va) < 1e-6) return a;
+            return a + (iso - va) / (vb - va) * (b - a);
+          }
+          const top    = { x: lerp(x, x+GRID, v00, v10), y };
+          const bottom = { x: lerp(x, x+GRID, v01, v11), y: y+GRID };
+          const left   = { x, y: lerp(y, y+GRID, v00, v01) };
+          const right  = { x: x+GRID, y: lerp(y, y+GRID, v10, v11) };
+
+          // Draw line segments for this cell
+          const segs = {
+            1:  [left, bottom],   2:  [bottom, right],
+            3:  [left, right],    4:  [top, right],
+            5:  [top, left, bottom, right], // saddle — two segs
+            6:  [top, bottom],    7:  [top, left],
+            8:  [top, left],      9:  [top, bottom],
+            10: [left, top, right, bottom], // saddle
+            11: [top, right],     12: [left, right],
+            13: [bottom, right],  14: [left, bottom],
+          };
+          const seg = segs[idx];
+          if (!seg) continue;
+          if (seg.length === 4) {
+            // saddle: two separate line segments
+            ctx.moveTo(seg[0].x, seg[0].y); ctx.lineTo(seg[1].x, seg[1].y);
+            ctx.moveTo(seg[2].x, seg[2].y); ctx.lineTo(seg[3].x, seg[3].y);
+          } else {
+            ctx.moveTo(seg[0].x, seg[0].y); ctx.lineTo(seg[1].x, seg[1].y);
+          }
+        }
+      }
+      ctx.stroke();
+    }
+
+    // Radial vignette — darker at center so name pops
+    const grad = ctx.createRadialGradient(W/2, H/2, 0, W/2, H/2, Math.max(W,H)*0.6);
+    grad.addColorStop(0,   'rgba(10,10,10,0.72)');
+    grad.addColorStop(0.5, 'rgba(10,10,10,0.3)');
+    grad.addColorStop(1,   'rgba(10,10,10,0)');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, W, H);
+
+    // Very subtle orange bloom behind center
+    const bloom = ctx.createRadialGradient(W/2, H/2, 0, W/2, H/2, W*0.35);
+    bloom.addColorStop(0,   'rgba(232,98,42,0.06)');
+    bloom.addColorStop(1,   'rgba(232,98,42,0)');
+    ctx.fillStyle = bloom;
+    ctx.fillRect(0, 0, W, H);
+  }
+
+  window.addEventListener('resize', resize);
+  resize();
+})();
+
+// ── Scroll reveal ──
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('up'); obs.unobserve(e.target); } });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
