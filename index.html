@@ -103,13 +103,13 @@ nav {
 .about-img-inner {
   position: absolute; inset: 0;
   background: url('guy-profile.png') center / cover no-repeat;
-  filter: brightness(.65) saturate(.85);
+  filter: brightness(.65) saturate(.6);
   transition: transform .6s ease;
 }
 #about:hover .about-img-inner { transform: scale(1.03); }
 .about-img-overlay {
   position: absolute; inset: 0;
-  background: linear-gradient(to right, transparent 70%, rgba(10,10,10,0.6) 100%);
+  background: linear-gradient(to right, transparent 60%, rgba(10,10,10,0.6) 100%);
 }
 .about-img-tag {
   position: absolute; bottom: 2rem; left: 2rem;
@@ -171,9 +171,9 @@ nav {
 .awards-hero-bg {
   position: absolute; inset: 0;
     background: url('images/IMG_7132.JPG') center / cover no-repeat;
-  filter: brightness(.3) saturate(.6);
+  filter: brightness(.6) saturate(.8);
 }
-.awards-hero-bg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(13,13,13,1) 0%, transparent 60%); }
+.awards-hero-bg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(13,13,13,1) 0%, transparent 40%); }
 .awards-hero-title { position: relative; z-index: 1; }
 .awards-hero-title h2 { font-family: var(--display); font-size: clamp(3.5rem, 7vw, 7rem); color: var(--white); line-height: .9; }
 .awards-hero-title h2 span { color: var(--orange); }
@@ -203,7 +203,7 @@ nav {
 .contact-bg {
   position: absolute; inset: 0;
     background: url('images/IMG_7168.JPG') center / cover no-repeat;
-  filter: brightness(.18) saturate(.5);
+  filter: brightness(.4) saturate(.5);
 }
 .contact-content { position: relative; z-index: 1; padding: 7rem 3rem; width: 100%; }
 .contact-content h2 { font-family: var(--display); font-size: clamp(4.5rem, 11vw, 11rem); line-height: .88; color: var(--white); margin-bottom: 3.5rem; }
