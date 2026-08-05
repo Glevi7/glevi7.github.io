@@ -102,7 +102,7 @@ nav {
 }
 .about-img-inner {
   position: absolute; inset: 0;
-  background: url('https://images.unsplash.com/photo-1508444845599-5c89863b1c44?auto=format&w=900&q=85') center / cover no-repeat;
+  background: url('images/IMG_7168.jpg') center / cover no-repeat;
   filter: brightness(.65) saturate(.85);
   transition: transform .6s ease;
 }
@@ -170,7 +170,7 @@ nav {
 }
 .awards-hero-bg {
   position: absolute; inset: 0;
-  background: url('https://images.unsplash.com/photo-1516849841032-87cbac4d88f7?auto=format&w=1600&q=80') center 60% / cover no-repeat;
+    background: url('images/IMG_7132.jpg') center / cover no-repeat;
   filter: brightness(.3) saturate(.6);
 }
 .awards-hero-bg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(13,13,13,1) 0%, transparent 60%); }
@@ -274,7 +274,7 @@ footer { background: #060606; padding: 1.5rem 3rem; display: flex; justify-conte
     <p class="hero-eyebrow">Aerospace &amp; Systems Engineer · Ohio State University</p>
     <div class="hero-name">GUY<br><span class="hero-name-accent">LEVI</span></div>
     <div class="hero-rule"></div>
-    <p class="hero-sub">Designing autonomous aircraft through flight controls, avionics, software, and systems engineering..</p>
+    <p class="hero-sub">Designing autonomous aircraft through flight controls, avionics, software, and systems engineering.</p>
     <div class="hero-actions">
       <a href="#projects" class="btn-orange">View Projects</a>
       <a href="#contact" class="btn-outline-w">Get in Touch</a>
@@ -478,14 +478,14 @@ footer { background: #060606; padding: 1.5rem 3rem; display: flex; justify-conte
   </div>
 </section>
 
-<!-- FOOTER -->
+
 <footer>
   <div class="footer-l">© 2026 Guy Levi · Columbus, OH</div>
   <div class="footer-r">Aerospace &amp; Systems Engineering</div>
 </footer>
 
 <script>
-// ── Topographic contour background ──
+
 (function() {
   const canvas = document.getElementById('topoCanvas');
   const hero = document.getElementById('hero');
@@ -495,7 +495,7 @@ footer { background: #060606; padding: 1.5rem 3rem; display: flex; justify-conte
     draw();
   }
 
-  // Smooth noise using multiple sine waves (no external lib needed)
+  
   function noise(x, y, seed) {
     const s = seed || 0;
     return (
@@ -513,13 +513,13 @@ footer { background: #060606; padding: 1.5rem 3rem; display: flex; justify-conte
     const W = canvas.width, H = canvas.height;
     ctx.clearRect(0, 0, W, H);
 
-    const GRID = 5;           // sample resolution (px)
+    const GRID = 5;           
     const cols = Math.ceil(W / GRID) + 1;
     const rows = Math.ceil(H / GRID) + 1;
-    const LEVELS = 22;        // number of contour bands
+    const LEVELS = 22;        
     const seeds = [0, 3.7, 8.1, 14.5, 21.3];
 
-    // Build height field
+    
     const field = [];
     for (let r = 0; r < rows; r++) {
       field[r] = [];
@@ -532,11 +532,11 @@ footer { background: #060606; padding: 1.5rem 3rem; display: flex; justify-conte
       }
     }
 
-    // Find global min/max
+    
     let mn = Infinity, mx = -Infinity;
     field.forEach(row => row.forEach(v => { if(v<mn)mn=v; if(v>mx)mx=v; }));
 
-    // Marching squares — draw contour lines
+    
     ctx.lineCap = 'round';
     ctx.lineJoin = 'round';
 
@@ -544,7 +544,7 @@ footer { background: #060606; padding: 1.5rem 3rem; display: flex; justify-conte
       const t = level / LEVELS;
       const iso = mn + t * (mx - mn);
 
-      // Alternate: most lines white-dim, every ~5th line slightly brighter
+     
       const isBright = (level % 5 === 0);
       const alpha = isBright ? 0.18 : 0.09;
       ctx.strokeStyle = `rgba(255,255,255,${alpha})`;
@@ -559,7 +559,7 @@ footer { background: #060606; padding: 1.5rem 3rem; display: flex; justify-conte
           const v01 = field[r+1][c];
           const v11 = field[r+1][c+1];
 
-          // Which corners are above iso?
+         
           const b00 = v00 >= iso ? 1 : 0;
           const b10 = v10 >= iso ? 1 : 0;
           const b01 = v01 >= iso ? 1 : 0;
@@ -567,7 +567,7 @@ footer { background: #060606; padding: 1.5rem 3rem; display: flex; justify-conte
           const idx = b00*8 + b10*4 + b11*2 + b01*1;
           if (idx === 0 || idx === 15) continue;
 
-          // Interpolate edge crossings
+       
           function lerp(a, b, va, vb) {
             if (Math.abs(vb - va) < 1e-6) return a;
             return a + (iso - va) / (vb - va) * (b - a);
@@ -577,14 +577,14 @@ footer { background: #060606; padding: 1.5rem 3rem; display: flex; justify-conte
           const left   = { x, y: lerp(y, y+GRID, v00, v01) };
           const right  = { x: x+GRID, y: lerp(y, y+GRID, v10, v11) };
 
-          // Draw line segments for this cell
+          
           const segs = {
             1:  [left, bottom],   2:  [bottom, right],
             3:  [left, right],    4:  [top, right],
-            5:  [top, left, bottom, right], // saddle — two segs
+            5:  [top, left, bottom, right], 
             6:  [top, bottom],    7:  [top, left],
             8:  [top, left],      9:  [top, bottom],
-            10: [left, top, right, bottom], // saddle
+            10: [left, top, right, bottom], 
             11: [top, right],     12: [left, right],
             13: [bottom, right],  14: [left, bottom],
           };
@@ -602,7 +602,7 @@ footer { background: #060606; padding: 1.5rem 3rem; display: flex; justify-conte
       ctx.stroke();
     }
 
-    // Radial vignette — darker at center so name pops
+   
     const grad = ctx.createRadialGradient(W/2, H/2, 0, W/2, H/2, Math.max(W,H)*0.6);
     grad.addColorStop(0,   'rgba(10,10,10,0.72)');
     grad.addColorStop(0.5, 'rgba(10,10,10,0.3)');
@@ -610,7 +610,7 @@ footer { background: #060606; padding: 1.5rem 3rem; display: flex; justify-conte
     ctx.fillStyle = grad;
     ctx.fillRect(0, 0, W, H);
 
-    // Very subtle orange bloom behind center
+   
     const bloom = ctx.createRadialGradient(W/2, H/2, 0, W/2, H/2, W*0.35);
     bloom.addColorStop(0,   'rgba(232,98,42,0.06)');
     bloom.addColorStop(1,   'rgba(232,98,42,0)');
@@ -622,7 +622,7 @@ footer { background: #060606; padding: 1.5rem 3rem; display: flex; justify-conte
   resize();
 })();
 
-// ── Scroll reveal ──
+
 const obs = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('up'); obs.unobserve(e.target); } });
 }, { threshold: 0.08 });
